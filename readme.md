@@ -3,6 +3,9 @@
 ## Magesh Kuppan
 - tkmagesh77@gmail.com
 
+## Exercism
+- https://exercism.org/docs/using/solving-exercises/working-locally
+
 ## Schedule
 | what | when |
 |-----|-------
@@ -112,4 +115,8 @@ go run [file-name.go]
 
 ### Constants
 - Can have unused constants in both function & package scope
+### Programming Constructs
+#### if else
+#### switch case
+#### for
 
