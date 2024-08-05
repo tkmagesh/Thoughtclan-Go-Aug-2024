@@ -120,3 +120,10 @@ go run [file-name.go]
 #### switch case
 #### for
 
+### Functions
+- Variadic functions
+- Anonymous functions
+- Higher Order Functions
+    - Assign a function as a value to a variable
+    - Pass a function as an argument to another function
+    - Return a function as a return value from another function
