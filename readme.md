@@ -47,7 +47,44 @@
 Todo:
     - Composition Over Inheritance - study
 
-## Compilation
+## Go Lang
+### Data Types
+- bool
+- string
+- integers
+    - int8
+    - int16
+    - int32
+    - int64
+    - int
+- unsigned integers
+    - uint8
+    - uint16
+    - uint32
+    - uint64
+    - uint
+- floating points
+    - float32
+    - float64
+- complex numbers
+    - complex64 (real[float32] + imaginary[float32])
+    - complex128 (real[float64] + imaginary[float64])
+- type alias
+    - byte
+    - rune (unicode code point)
+
+### Compilation
 ```
 go build [file-name.go]
 ```
+```
+go build -o [output-file] [file-name.go]
+```
+
+### Compile & Execute
+```
+go run [file-name.go]
+```
+### Variables
+- using "var" keyword
+- using ":=" expression
