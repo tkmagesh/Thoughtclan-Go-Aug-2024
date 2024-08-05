@@ -88,3 +88,13 @@ go run [file-name.go]
 ### Variables
 - using "var" keyword
 - using ":=" expression
+#### Function Scope
+- Can use :=
+- Cannot have unused variables
+#### Package Scope
+- Cannot use :=
+- Can have unused variables
+
+### Constants
+- Can have unused constants in both function & package scope
+

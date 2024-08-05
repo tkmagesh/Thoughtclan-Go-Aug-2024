@@ -2,6 +2,8 @@ package main
 
 import "fmt"
 
+var appName = "Variables_App"
+
 func main() {
 	/*
 		var x int
@@ -84,4 +86,5 @@ func main() {
 	x, y, str := 100, 200, "Sum of %d and %d is %d\n"
 	result := x + y
 	fmt.Printf(str, x, y, result)
+
 }
