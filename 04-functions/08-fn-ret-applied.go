@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"time"
 )
 
 func main() {
@@ -13,11 +14,19 @@ func main() {
 	*/
 
 	// ver 4.0
-	add := getLogOperation(add)
-	subtract := getLogOperation(subtract)
+	/*
+		add := getLogOperation(add)
+		subtract := getLogOperation(subtract)
 
-	add(100, 200)
-	subtract(100, 200)
+		add(100, 200)
+		subtract(100, 200)
+	*/
+
+	/* ver 5.0 */
+	logAdd := getLogOperation(add)
+	profiledLogAdd := getProfileOperation(logAdd)
+	profiledLogAdd(100, 200)
+
 	/*
 		logAdd(100, 200)
 		logSubtract(100, 200)
@@ -36,6 +45,16 @@ func main() {
 		logSubtract := getLogOperation(subtract)
 		logSubtract(100, 200)
 	*/
+}
+
+/* ver 5.0 */
+func getProfileOperation(op func(int, int)) func(int, int) {
+	return func(i1, i2 int) {
+		start := time.Now()
+		op(i1, i2)
+		elapsed := time.Since(start)
+		fmt.Println("elapsed :", elapsed)
+	}
 }
 
 /* ver 4.0 */
