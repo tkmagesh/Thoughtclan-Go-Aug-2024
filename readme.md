@@ -215,3 +215,30 @@ go build .
 
 go build -o [binary_name] .
 ```
+- To import a module
+```
+go get [module_name]
+```
+
+- To upgrade a dependency to the latest
+```
+go get -u [module_name]
+```
+- To the update the go.mod file
+```
+go mod tidy
+```
+- To downlaod the dependencies listed in the go.mod file
+```
+go mod download
+```
+- To localize the dependencies into a 'vendor' folder
+```
+go mod vendor
+```
+- Other useful commands
+    - go mod graph
+    - go mod why [module_name]
+
+- Go mod command reference
+    - [Reference](https://go.dev/ref/mod)

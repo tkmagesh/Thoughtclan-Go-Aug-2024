@@ -4,12 +4,14 @@ import (
 	"fmt"
 
 	/* "github.com/tkmagesh/thoughtclan-go-aug-2024/10-modularity-app/calculator" */
+	"github.com/fatih/color"
 	calc "github.com/tkmagesh/thoughtclan-go-aug-2024/10-modularity-app/calculator" //package alias
 	"github.com/tkmagesh/thoughtclan-go-aug-2024/10-modularity-app/calculator/utils"
 )
 
 func main() {
-	fmt.Printf("%q app started\n", appName)
+	// fmt.Printf("%q app started\n", appName)
+	color.Red("%q app started\n", appName)
 	run()
 	/*
 		calculator.Add(100, 200)
