@@ -163,3 +163,13 @@ GOOS=windows GOARCH=amd64 go build program.go
 #### Map
 - typed collection of key/value pairs
 - should be initialized using make()
+
+### Errors
+- errors are values
+- errors are returned (not thrown)
+- error should be the last value in the list of returned results (by convention)
+- error values should implement "error" interface
+    - Error() string 
+- factories for creating error instances
+    - errors.New()
+    - fmt.Errorf()
