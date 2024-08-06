@@ -161,3 +161,5 @@ GOOS=windows GOARCH=amd64 go build program.go
     - cap()
 ![image](./images/slices.png)
 #### Map
+- typed collection of key/value pairs
+- should be initialized using make()
