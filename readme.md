@@ -103,6 +103,23 @@ go build -o [output-file] [file-name.go]
 ```
 go run [file-name.go]
 ```
+
+### List the environment variables used by "go" tool
+```
+go env
+go env [var_1] [var_2] ....
+```
+### List the supported OS & Arch for cross compilation
+```
+go tool dist list
+```
+### To cross compile
+```
+GOOS=[target_os] GOARCH=[target_arch] go build [filename.go]
+ex:
+GOOS=windows GOARCH=amd64 go build program.go
+```
+
 ### Variables
 - using "var" keyword
 - using ":=" expression
