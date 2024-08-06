@@ -25,6 +25,7 @@ func main() {
 		fmt.Printf("nos[%d] = %d\n", idx, val)
 	}
 
+	// nos2 := nos
 	nos2 := &nos
 	/*
 		(*nos2)[0] = 9999
@@ -33,10 +34,16 @@ func main() {
 	nos2[0] = 9999
 	fmt.Printf("nos[0] = %d and nos2[0] = %d\n", nos[0], nos2[0])
 
-	sort( /* ? */ )
+	sort(&nos)
 	fmt.Println(nos)
 }
 
-func sort( /* [5]int */ ) /* no return values */ {
-
+func sort(list *[5]int) /* no return values */ {
+	for i := 0; i < 4; i++ {
+		for j := i + 1; j < 5; j++ {
+			if list[i] > list[j] {
+				list[i], list[j] = list[j], list[i]
+			}
+		}
+	}
 }

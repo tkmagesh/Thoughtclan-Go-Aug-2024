@@ -153,4 +153,6 @@ GOOS=windows GOARCH=amd64 go build program.go
 #### Array
 - Fixed sized typed collection
 #### Slice
+- Dynanic sized typed collection
+- Pointer to an array
 #### Map
