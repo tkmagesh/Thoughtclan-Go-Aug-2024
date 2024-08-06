@@ -144,3 +144,7 @@ GOOS=windows GOARCH=amd64 go build program.go
     - Assign a function as a value to a variable
     - Pass a function as an argument to another function
     - Return a function as a return value from another function
+
+### Pointers
+- Everything is a value in go
+- Use pointers for references
