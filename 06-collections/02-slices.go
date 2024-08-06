@@ -49,6 +49,15 @@ func main() {
 	subset[0] = 8888
 	fmt.Println("subset :", subset)
 	fmt.Println("nos :", nos)
+
+	nosCopy := make([]int, len(nos))
+	copy(nosCopy, nos)
+	fmt.Println(nosCopy)
+
+	nos[0] = -100
+	fmt.Println("nos :", nos)
+	fmt.Println("nosCopy :", nosCopy)
+
 }
 
 func sort(list []int) /* no return values */ {

@@ -155,4 +155,9 @@ GOOS=windows GOARCH=amd64 go build program.go
 #### Slice
 - Dynanic sized typed collection
 - Pointer to an array
+- functions 
+    - append()
+    - len()
+    - cap()
+![image](./images/slices.png)
 #### Map

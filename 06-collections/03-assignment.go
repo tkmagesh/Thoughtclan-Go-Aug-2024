@@ -18,10 +18,12 @@ func printPrimes(primes []int) {
 }
 
 func generatePrimes(start, end int) []int {
-	var primes []int
+	// var primes []int
+	var primes []int = make([]int, 0, (end-start)/2)
 	for no := start; no <= end; no++ {
 		if isPrime(no) {
 			primes = append(primes, no)
+			fmt.Printf("len(primes) : %d, cap(primes) : %d\n", len(primes), cap(primes))
 		}
 	}
 	return primes
