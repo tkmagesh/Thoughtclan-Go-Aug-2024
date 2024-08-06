@@ -6,16 +6,38 @@ package main
 import "fmt"
 
 func main() {
-	var start, end int
+	start, end := getRange()
+	primes := generatePrimes(start, end)
+	printPrimes(primes)
+}
+
+func printPrimes(primes []int) {
+	for _, primeNo := range primes {
+		fmt.Printf("prime no : %d\n", primeNo)
+	}
+}
+
+func generatePrimes(start, end int) []int {
+	var primes []int
+	for no := start; no <= end; no++ {
+		if isPrime(no) {
+			primes = append(primes, no)
+		}
+	}
+	return primes
+}
+
+func isPrime(no int) bool {
+	for i := 2; i <= (no / 2); i++ {
+		if no%i == 0 {
+			return false
+		}
+	}
+	return true
+}
+
+func getRange() (start, end int) {
 	fmt.Println("Enter the start & end :")
 	fmt.Scanln(&start, &end)
-LOOP:
-	for no := start; no <= end; no++ {
-		for i := 2; i <= (no / 2); i++ {
-			if no%i == 0 {
-				continue LOOP
-			}
-		}
-		fmt.Println("Prime no :", no)
-	}
+	return
 }
