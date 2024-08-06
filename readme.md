@@ -185,3 +185,33 @@ GOOS=windows GOARCH=amd64 go build program.go
 
 #### Recovery
 - recover()  returns the error that resulted in the panic
+
+### Modularity
+#### Modules
+- Any code that has to be version & deployed together
+- typically a folder with a module file (go.mod)
+- go.mod
+    - name
+        (repo path by convention)
+    - go runtime version targetted
+    - information about dependencies
+#### Packages
+- internal organization of a module
+- typically folders
+- nested packages are allowed
+
+#### Module commands
+- To create a module
+```
+go mod init [module_name]
+```
+- To run a module
+```
+go run .
+```
+- To create a build
+```
+go build .
+
+go build -o [binary_name] .
+```
