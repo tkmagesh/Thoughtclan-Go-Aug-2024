@@ -148,3 +148,9 @@ GOOS=windows GOARCH=amd64 go build program.go
 ### Pointers
 - Everything is a value in go
 - Use pointers for references
+
+### Collections
+#### Array
+- Fixed sized typed collection
+#### Slice
+#### Map
