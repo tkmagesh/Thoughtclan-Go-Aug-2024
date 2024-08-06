@@ -173,3 +173,15 @@ GOOS=windows GOARCH=amd64 go build program.go
 - factories for creating error instances
     - errors.New()
     - fmt.Errorf()
+
+### Deferred Functions
+- Postpone the execution of a function until the current function execution is completed
+
+### Panic & Recovery
+#### Panic
+- Represents the state of the application where the application execution cannot proceed further
+- However all the deferr'ed function will be executed
+- A panic is raised using the 'panic()' function
+
+#### Recovery
+- recover()  returns the error that resulted in the panic
