@@ -242,3 +242,6 @@ go mod vendor
 
 - Go mod command reference
     - [Reference](https://go.dev/ref/mod)
+
+### Structs
+- User defined type
