@@ -245,3 +245,6 @@ go mod vendor
 
 ### Structs
 - User defined type
+
+### Methods
+- A method is nothing but a function with a receiver
