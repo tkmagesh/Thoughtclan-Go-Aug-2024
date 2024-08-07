@@ -52,14 +52,50 @@ func PrintArea(x interface{ Area() float64 }) {
 	fmt.Println("Area :", x.Area())
 }
 
+// ver 3.0
+func (c Circle) Perimeter() float64 {
+	return 2 * math.Pi * c.Radius
+}
+
+func (r Rectangle) Perimeter() float64 {
+	return 2 * (r.Length + r.Breadth)
+}
+
+func PrintPerimeter(x interface{ Perimeter() float64 }) {
+	fmt.Println("Perimeter :", x.Perimeter())
+}
+
+func PrintShapeStats1(x interface {
+	interface{ Area() float64 }
+	interface{ Perimeter() float64 }
+}) {
+	PrintArea(x)      // x should be interface{ Area() float64 }
+	PrintPerimeter(x) // x should be interface {Perimeter() float64 }
+}
+
+func PrintShapeStats2(x interface {
+	Area() float64
+	Perimeter() float64
+}) {
+	PrintArea(x)      // x should be interface{ Area() float64 }
+	PrintPerimeter(x) // x should be interface {Perimeter() float64 }
+}
+
 func main() {
 	c := Circle{12}
 	// fmt.Println("Area :", c.Area())
-	PrintArea(c)
+	/*
+		PrintArea(c)
+		PrintPerimeter(c)
+	*/
+	PrintShapeStats2(c)
 
 	r := Rectangle{10, 12}
 	// fmt.Println("Area :", r.Area())
-	PrintArea(r)
+	/*
+		PrintArea(r)
+		PrintPerimeter(r)
+	*/
+	PrintShapeStats2(r)
 
-	PrintArea(100)
 }
