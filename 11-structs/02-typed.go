@@ -2,31 +2,25 @@ package main
 
 import "fmt"
 
+type Product struct {
+	id   int
+	name string
+	cost float32
+}
+
 func main() {
 	/* id = 100, name = "Pen", cost = 10 */
 
 	/*
-		var product struct {
-			id   int
-			name string
-			cost float64
-		}
+		var product Product
 		product.id = 100
 		product.name = "Pen"
 		product.cost = 10
 	*/
 
-	// var product struct { id int; name string; cost float32} = struct{id int; name string; cost float32}{ id : 100, name : "Pen", cost : 10}
+	// var product Product = Product{ id : 100, name : "Pen", cost : 10}
 	/*
-		var product struct {
-			id   int
-			name string
-			cost float32
-		} = struct {
-			id   int
-			name string
-			cost float32
-		}{
+		var product Product = Product{
 			id:   100,
 			name: "Pen",
 			cost: 10,
@@ -34,11 +28,7 @@ func main() {
 	*/
 
 	// type inference
-	var product = struct {
-		id   int
-		name string
-		cost float32
-	}{
+	var product = Product{
 		id:   100,
 		name: "Pen",
 		cost: 10,
@@ -56,18 +46,10 @@ func main() {
 2. Write a ApplyDiscount() function which updates the given product cost with a discount
 */
 
-func Format(p struct {
-	id   int
-	name string
-	cost float32
-}) string {
+func Format(p Product) string {
 	return fmt.Sprintf("id = %d, name = %q, cost = %0.2f", p.id, p.name, p.cost)
 }
 
-func ApplyDiscount(p *struct {
-	id   int
-	name string
-	cost float32
-}, discountPercentage float32) {
+func ApplyDiscount(p *Product, discountPercentage float32) {
 	p.cost = p.cost * ((100 - discountPercentage) / 100)
 }

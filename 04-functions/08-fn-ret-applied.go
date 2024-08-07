@@ -47,7 +47,28 @@ func main() {
 	*/
 }
 
+/* final version */
+type OperationFn func(int, int)
+
+func getProfileOperation(op OperationFn) OperationFn {
+	return func(i1, i2 int) {
+		start := time.Now()
+		op(i1, i2)
+		elapsed := time.Since(start)
+		fmt.Println("elapsed :", elapsed)
+	}
+}
+
+func getLogOperation(op OperationFn) OperationFn {
+	return func(x, y int) {
+		log.Println("Invocation started")
+		op(x, y)
+		log.Println("Invocation completed")
+	}
+}
+
 /* ver 5.0 */
+/*
 func getProfileOperation(op func(int, int)) func(int, int) {
 	return func(i1, i2 int) {
 		start := time.Now()
@@ -57,7 +78,9 @@ func getProfileOperation(op func(int, int)) func(int, int) {
 	}
 }
 
+*/
 /* ver 4.0 */
+/*
 func getLogOperation(op func(int, int)) func(int, int) {
 	return func(x, y int) {
 		log.Println("Invocation started")
@@ -65,6 +88,7 @@ func getLogOperation(op func(int, int)) func(int, int) {
 		log.Println("Invocation completed")
 	}
 }
+*/
 
 // ver 3.0
 func logOperation(op func(int, int), x, y int) {
