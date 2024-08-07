@@ -1,0 +1,11 @@
+Create a CLI for managing product inventory
+Use cases:
+1. add new products (user inputs)
+2. Query the number of products in the inventory
+3. Query a product by index
+4. List all the products
+5. Get the over all inventory value (sum of units * unitCost)
+Homework
+=======
+5. Persist the inventory as a CSV file
+6. Load the inventory from a CSV file
