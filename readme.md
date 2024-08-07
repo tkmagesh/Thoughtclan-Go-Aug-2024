@@ -27,6 +27,10 @@
 - No powerpoint
 - Discussion & Code
 
+## Books
+- [Growing Object Oriented Software Guided By Tests](https://www.amazon.in/Growing-Object-Oriented-Software-Guided-Tests/dp/8131734730)
+- [Agile Principle Patterns & Practices](https://www.amazon.in/Agile-Principles-Patterns-Practices-PRACTS-ebook/dp/B0051TM4GI)
+
 ## 
 - Language Foundation
 - Concurrency Programming
