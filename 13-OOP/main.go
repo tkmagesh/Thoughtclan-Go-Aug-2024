@@ -8,10 +8,12 @@ import (
 
 func main() {
 	inventory := models.NewInventory()
-	inventory.AddProduct("Pen", 10, 10)
-	inventory.AddProduct("Pencil", 5, 20)
-	inventory.AddProduct("Marker", 50, 2)
-	inventory.AddProduct("Notepad", 20, 30)
+	/*
+		inventory.AddProduct("Pen", 10, 10)
+		inventory.AddProduct("Pencil", 5, 20)
+		inventory.AddProduct("Marker", 50, 2)
+		inventory.AddProduct("Notepad", 20, 30)
+	*/
 	commands := cmd.NewCommands(inventory)
 	var userChoice int
 LOOP:

@@ -22,9 +22,10 @@ func NewCommands(inventory *models.Inventory) *Commands {
 
 func (commands *Commands) AddProduct() error {
 	var userInput string
-	fmt.Println("Enter the product info (name, cost, units) :")
+	fmt.Println("Enter the product info (name,cost,units) :")
 	fmt.Scanln(&userInput)
 	fields := strings.Split(userInput, ",")
+
 	name := fields[0]
 	if cost, err := strconv.ParseFloat(fields[1], 64); err == nil {
 		if units, err := strconv.Atoi(fields[2]); err == nil {
