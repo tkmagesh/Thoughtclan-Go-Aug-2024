@@ -32,8 +32,13 @@ func main() {
 	fmt.Println(milk.Name)
 
 	// Format 'milk' and print
+	fmt.Println(FormatPerishableProduct(milk))
+
 	// Apply 10% discount to milk
-	// Format 'milk' and print
+	ApplyDiscount(&(milk.Product), 10)
+
+	// FormatPerishableProduct 'milk' and print
+	fmt.Println(FormatPerishableProduct(milk))
 }
 
 func Format(p Product) string {
@@ -42,4 +47,8 @@ func Format(p Product) string {
 
 func ApplyDiscount(p *Product, discountPercentage float64) {
 	p.Cost = p.Cost * ((100 - discountPercentage) / 100)
+}
+
+func FormatPerishableProduct(pp PerishableProduct) string {
+	return fmt.Sprintf("%s, Expiry = %q", Format(pp.Product), pp.Expiry)
 }
