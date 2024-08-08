@@ -285,3 +285,13 @@ go mod vendor
 #### sync.WaitGroup
 - Semaphore based counter
 - Has the ability to block the execution of the current function until the counter becomes 0
+
+#### Concurrent safe data
+- To execute the program with an "embedded" race detector
+    ```
+    go run --race [filename.go]
+    ```
+- To create a build with an "embedded" race detector
+    ```
+    go build --race [filename.go]
+    ```

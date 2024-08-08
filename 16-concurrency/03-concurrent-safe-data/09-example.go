@@ -3,10 +3,10 @@ package main
 import (
 	"fmt"
 	"sync"
+	"sync/atomic"
 )
 
-var count int
-var mutex sync.Mutex
+var count atomic.Int64
 
 func main() {
 	wg := &sync.WaitGroup{}
@@ -15,14 +15,11 @@ func main() {
 		go increment(wg)
 	}
 	wg.Wait()
-	fmt.Println("count :", count)
+	fmt.Println("count :", count.Load())
 }
 
 func increment(wg *sync.WaitGroup) {
 	defer wg.Done()
-	mutex.Lock()
-	{
-		count++
-	}
-	mutex.Unlock()
+	count.Add(1)
+
 }
