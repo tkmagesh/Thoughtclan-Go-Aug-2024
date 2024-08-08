@@ -252,3 +252,36 @@ go mod vendor
 
 ### Methods
 - A method is nothing but a function with a receiver
+
+### Concurrency
+- application with more than one execution path
+#### OS Thread based concurrency
+![image](./images/OS-Thread-Concurrency.png)
+- concurrent operations are represented os OS Threads
+- Managed by OS thread scheduler
+- OS threads are costly
+    - ~2MB of memory
+    - Creating & destroying threads are costly (and thereby the need for Thread Pools)
+    - Thread context switching is costly
+
+#### Go concurrency
+![image](./images/Go-concurrency.png)
+- Application binary includes its own "scheduler"
+- Concurrent operations are represented as "goroutines"
+- "goroutines" are scheduled to the OS Threads by the built in scheduler
+- goroutines are cheap (~4KB)
+
+#### Support for concurrency
+- Concurrency support is built in the language
+    - "go" keyword
+    - "channel" data type
+    - channel operator ( <- )
+    - for..range
+    - select..case
+- Api Support
+    - "sync" package
+    - "sync/atomic" package
+
+#### sync.WaitGroup
+- Semaphore based counter
+- Has the ability to block the execution of the current function until the counter becomes 0
