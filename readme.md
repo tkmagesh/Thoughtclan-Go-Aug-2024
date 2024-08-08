@@ -295,3 +295,39 @@ go mod vendor
     ```
     go build --race [filename.go]
     ```
+#### Channels
+- data type for enabling communication between goroutines
+- typed
+##### Declaration
+```go
+var [var_name] chan [data_type]
+// ex:
+var ch chan int
+```
+
+##### Instantiation
+```go
+[var_name] = make(chan [data_type])
+// ex:
+ch = make(chan int)
+```
+##### Declaration & Initialization
+```go
+ch := make(chan int)
+```
+##### Operations
+- Using the channel operator ( <- )
+
+###### Send Operation
+```go
+[var_name] <- [data]
+// ex:
+ch <- 100
+```
+###### Receive Operation
+```go
+<- [var_name]
+// ex:
+<- ch
+```
+
