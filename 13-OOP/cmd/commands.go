@@ -3,18 +3,17 @@ package cmd
 import (
 	"errors"
 	"fmt"
-	"inventory-app/internal/models"
 	"strconv"
 	"strings"
 )
 
 type Commands struct {
-	inventory *models.Inventory
+	inventory IInventory
 }
 
 var ErrUserInput error = errors.New("user input error")
 
-func NewCommands(inventory *models.Inventory) *Commands {
+func NewCommands(inventory IInventory) *Commands {
 	return &Commands{
 		inventory: inventory,
 	}
@@ -30,7 +29,7 @@ func (commands *Commands) AddProduct() error {
 	if cost, err := strconv.ParseFloat(fields[1], 64); err == nil {
 		if units, err := strconv.Atoi(fields[2]); err == nil {
 			newProduct := commands.inventory.AddProduct(name, cost, units)
-			fmt.Println("New product added :", newProduct.ToString())
+			fmt.Println("New product added :", newProduct)
 			return nil
 		}
 	}
@@ -49,7 +48,7 @@ func (commands *Commands) QueryByIndex() error {
 		return ErrUserInput
 	}
 	if product := commands.inventory.GetByIndex(idx); product != nil {
-		fmt.Println(product.ToString())
+		fmt.Println(product)
 		return nil
 	}
 	fmt.Println("Product not found!")
@@ -60,7 +59,7 @@ func (commands *Commands) QueryProducts() {
 
 	if products := commands.inventory.GetProducts(); len(products) != 0 {
 		for _, p := range products {
-			fmt.Println(p.ToString())
+			fmt.Println(p)
 		}
 		return
 	}

@@ -13,7 +13,8 @@ func (p Product) GetValue() float64 {
 	return p.Cost * float64(p.Units)
 }
 
-func (p Product) ToString() string {
+// fmt.Stringer interface implementation
+func (p Product) String() string {
 	return fmt.Sprintf("Id = %d, Name = %q, Cost = %0.2f, Units = %d, Value = %0.2f", p.Id, p.Name, p.Cost, p.Units, p.GetValue())
 }
 
