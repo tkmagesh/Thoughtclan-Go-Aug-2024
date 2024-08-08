@@ -3,11 +3,17 @@ Execute the logic for checking if a given number is a prime number "concurrently
 */
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+)
+
+var primes []int
+var mutex sync.Mutex
 
 func main() {
 	start, end := getRange()
-	primes := generatePrimes(start, end)
+	generatePrimes(start, end)
 	printPrimes(primes)
 }
 
@@ -17,25 +23,28 @@ func printPrimes(primes []int) {
 	}
 }
 
-func generatePrimes(start, end int) []int {
+func generatePrimes(start, end int) {
 	// var primes []int
-	var primes []int = make([]int, 0, (end-start)/2)
+	wg := &sync.WaitGroup{}
 	for no := start; no <= end; no++ {
-		if isPrime(no) {
-			primes = append(primes, no)
-			fmt.Printf("len(primes) : %d, cap(primes) : %d\n", len(primes), cap(primes))
-		}
+		wg.Add(1)
+		go checkPrime(wg, no)
 	}
-	return primes
+	wg.Wait()
 }
 
-func isPrime(no int) bool {
+func checkPrime(wg *sync.WaitGroup, no int) {
+	defer wg.Done()
 	for i := 2; i <= (no / 2); i++ {
 		if no%i == 0 {
-			return false
+			return
 		}
 	}
-	return true
+	mutex.Lock()
+	{
+		primes = append(primes, no)
+	}
+	mutex.Unlock()
 }
 
 func getRange() (start, end int) {
