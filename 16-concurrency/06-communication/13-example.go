@@ -1,12 +1,29 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+)
 
 func main() {
+	/*
+		ch := make(chan int)
+		go func() {
+			ch <- 100
+		}()
+		data := <-ch
+		fmt.Println(data)
+	*/
+
 	ch := make(chan int)
+	wg := sync.WaitGroup{}
+	wg.Add(1)
 	go func() {
-		ch <- 100
+		defer wg.Done()
+		data := <-ch
+		fmt.Println(data)
 	}()
-	data := <-ch
-	fmt.Println(data)
+	ch <- 100
+	wg.Wait()
+
 }

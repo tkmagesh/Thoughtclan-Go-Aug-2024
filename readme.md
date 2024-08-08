@@ -331,3 +331,6 @@ ch <- 100
 <- ch
 ```
 
+##### Channel Behaviors
+
+![image](./images/Channel-Operations.png)
