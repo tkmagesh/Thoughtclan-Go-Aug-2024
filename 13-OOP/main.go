@@ -23,7 +23,8 @@ LOOP:
 		fmt.Println("3. Get product by index")
 		fmt.Println("4. List all the products")
 		fmt.Println("5. Get inventory value")
-		fmt.Println("6. Exit")
+		fmt.Println("6. Sort products by cost")
+		fmt.Println("7. Exit")
 		fmt.Scanln(&userChoice)
 		switch userChoice {
 		case 1:
@@ -46,6 +47,9 @@ LOOP:
 			commands.QueryInventoryValue()
 			continue LOOP
 		case 6:
+			commands.SortProductsByCost()
+			continue LOOP
+		case 7:
 			break LOOP
 		}
 	}

@@ -70,3 +70,8 @@ func (commands *Commands) QueryInventoryValue() {
 	invValue := commands.inventory.GetValue()
 	fmt.Printf("Inventory value : %02.f\n", invValue)
 }
+
+func (commands *Commands) SortProductsByCost() {
+	commands.inventory.SortByCost()
+	commands.QueryProducts()
+}
