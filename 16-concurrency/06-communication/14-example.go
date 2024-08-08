@@ -15,7 +15,7 @@ func main() {
 }
 
 // producer
-func add(x, y int, ch chan int) {
+func add(x, y int, ch chan<- int) {
 	result := x + y
 	ch <- result
 

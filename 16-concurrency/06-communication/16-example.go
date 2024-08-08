@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
 // Share memory by communicating (channels)
@@ -14,9 +15,10 @@ func main() {
 }
 
 // producer
-func add(x, y int) chan int {
+func add(x, y int) <-chan int {
 	ch := make(chan int)
 	go func() {
+		time.Sleep(3 * time.Second)
 		result := x + y
 		ch <- result
 	}()
