@@ -334,3 +334,15 @@ ch <- 100
 ##### Channel Behaviors
 
 ![image](./images/Channel-Operations.png)
+
+#### Context
+- Cancel Propagation
+    - programatic cancellation
+    - timeout cancellation
+- Contexts can be created as a hierarchy
+- Root context created using context.Background() (non cancellable)
+- Factory functions
+    - context.WithCancel()
+    - context.WithTimeout()
+    - context.WithDeadline()
+    - context.WithValue()

@@ -1,27 +1,28 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"time"
 )
 
 func main() {
-	stopCh := make(chan struct{})
+	rootCtx := context.Background()
+	cancelCtx, cancel := context.WithCancel(rootCtx)
 	go func() {
 		fmt.Println("Hit ENTER to stop...")
 		fmt.Scanln()
-		// stopCh <- struct{}{}
-		close(stopCh)
+		cancel()
 	}()
-	printNos(stopCh)
+	printNos(cancelCtx)
 
 }
 
-func printNos(stopCh <-chan struct{}) {
+func printNos(ctx context.Context) {
 LOOP:
 	for no := 1; ; no++ {
 		select {
-		case <-stopCh:
+		case <-ctx.Done():
 			fmt.Println("stop signal received")
 			break LOOP
 		default:
