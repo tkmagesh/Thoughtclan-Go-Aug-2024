@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -23,10 +24,10 @@ var products []Product = []Product{
 	{103, "Notepad", 20, 30},
 }
 
+/*
 type AppServer struct {
-	handlers map[string]func(http.ResponseWriter, *http.Request)
-	// middlewares []func(func(http.ResponseWriter, *http.Request)) func(http.ResponseWriter, *http.Request)
-	middlewares []func(http.HandlerFunc) http.HandlerFunc
+	handlers    map[string]func(http.ResponseWriter, *http.Request)
+	middlewares []func(func(http.ResponseWriter, *http.Request)) func(http.ResponseWriter, *http.Request)
 }
 
 func NewAppServer() *AppServer {
@@ -54,32 +55,48 @@ func (appServer *AppServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	http.Error(w, "requested resource not found", http.StatusNotFound)
 }
+*/
 
 // Application handlers
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, "Hello, World!")
 }
 
-func ProductsHandler(w http.ResponseWriter, r *http.Request) {
-	switch r.Method {
-	case http.MethodGet:
-		if err := json.NewEncoder(w).Encode(products); err != nil {
-			http.Error(w, "error encoding products", http.StatusInternalServerError)
+func GetProductsHandler(w http.ResponseWriter, r *http.Request) {
+	if err := json.NewEncoder(w).Encode(products); err != nil {
+		http.Error(w, "error encoding products", http.StatusInternalServerError)
+	}
+}
+
+func NewProductHandler(w http.ResponseWriter, r *http.Request) {
+	var newProduct Product
+	if err := json.NewDecoder(r.Body).Decode(&newProduct); err != nil {
+		http.Error(w, "invalid payload", http.StatusBadRequest)
+		return
+	}
+	newProduct.Id = len(products) + 100
+	products = append(products, newProduct)
+	w.WriteHeader(http.StatusCreated)
+	if err := json.NewEncoder(w).Encode(newProduct); err != nil {
+		http.Error(w, "error encoding product", http.StatusInternalServerError)
+	}
+}
+
+func GetOneProductHandler(w http.ResponseWriter, r *http.Request) {
+	id := r.PathValue("product_id")
+	fmt.Println(id)
+	if pid, err := strconv.Atoi(id); err == nil {
+		for _, product := range products {
+			if product.Id == pid {
+				if err := json.NewEncoder(w).Encode(product); err != nil {
+					http.Error(w, "error encoding product", http.StatusInternalServerError)
+				}
+				return
+			}
 		}
-	case http.MethodPost:
-		var newProduct Product
-		if err := json.NewDecoder(r.Body).Decode(&newProduct); err != nil {
-			http.Error(w, "invalid payload", http.StatusBadRequest)
-			return
-		}
-		newProduct.Id = len(products) + 100
-		products = append(products, newProduct)
-		w.WriteHeader(http.StatusCreated)
-		if err := json.NewEncoder(w).Encode(newProduct); err != nil {
-			http.Error(w, "error encoding product", http.StatusInternalServerError)
-		}
-	default:
-		http.Error(w, "method not supported", http.StatusMethodNotAllowed)
+		http.Error(w, "requested product not found", http.StatusNotFound)
+	} else {
+		http.Error(w, "bad request", http.StatusBadRequest)
 	}
 }
 
@@ -105,20 +122,11 @@ func profileMiddleware(handler func(http.ResponseWriter, *http.Request)) func(ht
 }
 
 func main() {
-	appServer := NewAppServer()
-
-	/*
-		appServer.Register("/", profileMiddleware(logMiddleware(IndexHandler)))
-		appServer.Register("/products", profileMiddleware(logMiddleware(ProductsHandler)))
-		appServer.Register("/customers", profileMiddleware(logMiddleware(CustomersHandler)))
-	*/
-	// Registering middlewares
-	appServer.UseMiddleware(profileMiddleware)
-	appServer.UseMiddleware(logMiddleware)
-
-	// Registering handlers
-	appServer.Register("/", IndexHandler)
-	appServer.Register("/products", ProductsHandler)
-	appServer.Register("/customers", CustomersHandler)
-	http.ListenAndServe(":8080", appServer)
+	serveMux := http.DefaultServeMux
+	serveMux.HandleFunc("/{$}", profileMiddleware(logMiddleware(IndexHandler)))
+	serveMux.HandleFunc("GET /products", profileMiddleware(logMiddleware(GetProductsHandler)))
+	serveMux.HandleFunc("GET /products/{product_id}", profileMiddleware(logMiddleware(GetOneProductHandler)))
+	serveMux.HandleFunc("POST /products", profileMiddleware(logMiddleware(NewProductHandler)))
+	serveMux.HandleFunc("/customers", profileMiddleware(logMiddleware(CustomersHandler)))
+	http.ListenAndServe(":8080", nil)
 }
