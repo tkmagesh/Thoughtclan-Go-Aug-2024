@@ -62,7 +62,7 @@ func (appServer *AppServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	// simulating a time consuming operation
 LOOP:
-	for {
+	for range 1 {
 		select {
 		case <-r.Context().Done():
 			break LOOP
@@ -73,7 +73,7 @@ LOOP:
 	if r.Context().Err() == context.DeadlineExceeded {
 		return
 	}
-	io.WriteString(w, "Hello, World!\n")
+	fmt.Fprintf(w, "Hello, %q\n", r.Context().Value("user-id"))
 }
 
 func GetProductsHandler(w http.ResponseWriter, r *http.Request) {
@@ -162,11 +162,15 @@ func authorizationMiddleware(handler http.HandlerFunc) http.HandlerFunc {
 			/*
 				Get the userid for the authkey from authKeyUserMapping and make it accessible in the handler
 			*/
-			handler(w, r)
+			if userid, exists := authKeyUserMapping[authKey[0]]; exists {
+				valCtx := context.WithValue(r.Context(), "user-id", userid)
+				handler(w, r.WithContext(valCtx))
+				return
+			}
+			http.Error(w, "Unauthorized access", http.StatusUnauthorized)
 			return
 		}
 		http.Error(w, "Unauthorized access", http.StatusUnauthorized)
-
 	}
 }
 
