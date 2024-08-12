@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -59,7 +60,20 @@ func (appServer *AppServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 // Application handlers
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	io.WriteString(w, "Hello, World!")
+	// simulating a time consuming operation
+LOOP:
+	for {
+		select {
+		case <-r.Context().Done():
+			break LOOP
+		default:
+			time.Sleep(1 * time.Second)
+		}
+	}
+	if r.Context().Err() == context.DeadlineExceeded {
+		return
+	}
+	io.WriteString(w, "Hello, World!\n")
 }
 
 func GetProductsHandler(w http.ResponseWriter, r *http.Request) {
@@ -121,9 +135,23 @@ func profileMiddleware(handler func(http.ResponseWriter, *http.Request)) func(ht
 	}
 }
 
+func timeoutMiddleware(handler http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		timeoutCtx, cancel := context.WithTimeout(r.Context(), 2*time.Second)
+		defer cancel()
+		newReq := r.WithContext(timeoutCtx)
+		handler(w, newReq)
+		if newReq.Context().Err() == context.DeadlineExceeded {
+			log.Println("timeout occurred!")
+			w.WriteHeader(http.StatusRequestTimeout)
+		}
+
+	}
+}
+
 func main() {
 	serveMux := http.DefaultServeMux
-	serveMux.HandleFunc("/{$}", profileMiddleware(logMiddleware(IndexHandler)))
+	serveMux.HandleFunc("/{$}", timeoutMiddleware(profileMiddleware(logMiddleware(IndexHandler))))
 	serveMux.HandleFunc("GET /products", profileMiddleware(logMiddleware(GetProductsHandler)))
 	serveMux.HandleFunc("GET /products/{product_id}", profileMiddleware(logMiddleware(GetOneProductHandler)))
 	serveMux.HandleFunc("POST /products", profileMiddleware(logMiddleware(NewProductHandler)))
