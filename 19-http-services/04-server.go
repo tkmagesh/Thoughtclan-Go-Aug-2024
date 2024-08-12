@@ -149,9 +149,30 @@ func timeoutMiddleware(handler http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
+var authKeyUserMapping map[string]string = map[string]string{
+	"key-1": "user-1",
+	"key-2": "user-2",
+	"key-3": "user-3",
+	"key-4": "user-4",
+}
+
+func authorizationMiddleware(handler http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if authKey, exists := r.Header["Authorization"]; exists {
+			/*
+				Get the userid for the authkey from authKeyUserMapping and make it accessible in the handler
+			*/
+			handler(w, r)
+			return
+		}
+		http.Error(w, "Unauthorized access", http.StatusUnauthorized)
+
+	}
+}
+
 func main() {
 	serveMux := http.DefaultServeMux
-	serveMux.HandleFunc("/{$}", timeoutMiddleware(profileMiddleware(logMiddleware(IndexHandler))))
+	serveMux.HandleFunc("/{$}", authorizationMiddleware(timeoutMiddleware(profileMiddleware(logMiddleware(IndexHandler)))))
 	serveMux.HandleFunc("GET /products", profileMiddleware(logMiddleware(GetProductsHandler)))
 	serveMux.HandleFunc("GET /products/{product_id}", profileMiddleware(logMiddleware(GetOneProductHandler)))
 	serveMux.HandleFunc("POST /products", profileMiddleware(logMiddleware(NewProductHandler)))
