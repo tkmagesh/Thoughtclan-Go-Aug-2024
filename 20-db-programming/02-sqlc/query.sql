@@ -6,3 +6,6 @@ SELECT * FROM students WHERE id = ?;
 
 -- name: fetchStudents :many
 SELECT * FROM students LIMIT 10;
+
+-- name: updateStudent :exec
+update students set fname=?, lname=?, email=? where ID=?

@@ -91,3 +91,24 @@ func (q *Queries) studentByID(ctx context.Context, id int64) (Student, error) {
 	)
 	return i, err
 }
+
+const updateStudent = `-- name: updateStudent :exec
+update students set fname=?, lname=?, email=? where ID=?
+`
+
+type updateStudentParams struct {
+	Fname string
+	Lname string
+	Email string
+	ID    int64
+}
+
+func (q *Queries) updateStudent(ctx context.Context, arg updateStudentParams) error {
+	_, err := q.db.ExecContext(ctx, updateStudent,
+		arg.Fname,
+		arg.Lname,
+		arg.Email,
+		arg.ID,
+	)
+	return err
+}

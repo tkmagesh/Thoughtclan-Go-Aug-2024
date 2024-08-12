@@ -28,24 +28,33 @@ func main() {
 		log.Fatal(err)
 	}
 
-	s := Student{
-		Fname:       "Leon",
-		Lname:       "Ashling",
-		DateOfBirth: time.Date(1994, time.August, 14, 23, 51, 42, 0, time.UTC),
-		Email:       "lashling5@senate.gov",
-		Address:     "39 Kipling Pass",
-		Gender:      "Male",
-	}
+	/*
+		s := Student{
+			Fname:       "Leon",
+			Lname:       "Ashling",
+			DateOfBirth: time.Date(1994, time.August, 14, 23, 51, 42, 0, time.UTC),
+			Email:       "lashling5@senate.gov",
+			Address:     "39 Kipling Pass",
+			Gender:      "Male",
+		}
 
-	//adding student record to table
-	sID, err := addStudent(s)
+		//adding student record to table
+
+			sID, err := addStudent(s)
+			if err != nil {
+				fmt.Println(err)
+			}
+			fmt.Printf("addSudent id: %v \n", sID)
+	*/
+
+	rowsAffected, err := updateStudent()
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Printf("addSudent id: %v \n", sID)
+	fmt.Printf("student updated, rows affected : %d\n", rowsAffected)
 
 	//selecting student by ID
-	st, err := studentByID(sID)
+	st, err := studentByID(1)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -61,7 +70,7 @@ func main() {
 
 func dbSqlConnect() (*sql.DB, error) {
 	// Opening a database connection.
-	db, err := sql.Open("mysql", "theuser:thepass@tcp(localhost:3306)/thedb?parseTime=true")
+	db, err := sql.Open("mysql", "root:rootuser@tcp(localhost:3306)/go_db_demo?parseTime=true")
 	if err != nil {
 		return nil, err
 	}
@@ -82,6 +91,21 @@ func addStudent(s Student) (int64, error) {
 	}
 
 	return id, nil
+}
+
+func updateStudent() (int64, error) {
+	query := "update students set fname=?, lname=? where ID=?;"
+	result, err := db.Exec(query, "Magesh", "Kuppan", 1)
+	if err != nil {
+		return 0, fmt.Errorf("updateStudent Error: %v", err)
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return 0, fmt.Errorf("updateStudent Error: %v", err)
+	}
+
+	return rowsAffected, nil
 }
 
 func fetchStudents() ([]Student, error) {

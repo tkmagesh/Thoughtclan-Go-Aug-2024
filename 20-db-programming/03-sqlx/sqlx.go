@@ -62,7 +62,7 @@ func main() {
 
 func sqlxConnect() (*sqlx.DB, error) {
 	// Opening a database connection.
-	db, err := sqlx.Open("mysql", "theuser:thepass@tcp(localhost:3306)/thedb?parseTime=true")
+	db, err := sqlx.Open("mysql", "root:rootuser@tcp(localhost:3306)/go_db_demo?parseTime=true")
 	if err != nil {
 		return nil, err
 	}
