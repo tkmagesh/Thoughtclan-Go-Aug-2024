@@ -149,11 +149,11 @@ func main() {
 	// middlewares
 	router.Use(logMiddleware)
 	router.Use(timeoutMiddleware)
-	router.Use(authorizationMiddleware)
+	// router.Use(authorizationMiddleware)
 	router.Use(profileMiddleware)
 
 	// handlers
-	router.HandleFunc("/", IndexHandler).Methods(http.MethodGet)
+	router.Handle("/", authorizationMiddleware(http.HandlerFunc(IndexHandler))).Methods(http.MethodGet)
 	router.HandleFunc("/products", GetProductsHandler).Methods(http.MethodGet)
 	router.HandleFunc("/products", NewProductHandler).Methods(http.MethodPost)
 	router.HandleFunc("/products/{id:[0-9]+}", GetOneProductHandler).Methods(http.MethodGet)
